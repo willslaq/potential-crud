@@ -5,7 +5,7 @@ class Developer {
 
   name: string;
 
-  genre: string;
+  gender: string;
 
   age: number;
 
@@ -13,16 +13,12 @@ class Developer {
 
   birthDate: Date;
 
-  constructor(
-    name: string,
-    genre: string,
-    age: number,
-    hobby: string,
-    birthDate: Date,
-  ) {
+  constructor({
+    name, gender, age, hobby, birthDate,
+  }: Omit<Developer, 'id'>) {
     this.id = uuid();
     this.name = name;
-    this.genre = genre;
+    this.gender = gender;
     this.age = age;
     this.hobby = hobby;
     this.birthDate = birthDate;

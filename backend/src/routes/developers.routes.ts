@@ -1,8 +1,8 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 
-import Developer from '../models/Developer';
 import DevelopersRepository from '../repositories/DevelopersRepository';
+import CreateDeveloperService from '../services/CreateDeveloperService';
 
 const developersRouter = Router();
 const developersRepository = new DevelopersRepository();
@@ -16,33 +16,33 @@ developersRouter.get('/', (request, response) => {
 developersRouter.get('/:id', (request, response) => response.json(developers));
 
 developersRouter.post('/', (request, response) => {
-  const {
-    name, genre, age, hobby, birthDate,
-  } = request.body;
+  try {
+    const {
+      name, gender, age, hobby, birthDate,
+    } = request.body;
 
-  if (!name || !genre || !age || !birthDate || !hobby) {
-    return response.status(400).json({
-      error: '😐 Dados incompletos, por favor verifique os dados enviado.',
+    const parsedBirthDate = parseISO(birthDate);
+
+    const createDeveloper = new CreateDeveloperService(developersRepository);
+
+    const developer = createDeveloper.execute({
+      name,
+      gender,
+      age,
+      hobby,
+      birthDate: parsedBirthDate,
     });
+
+    return response.json(developer);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
   }
-
-  const parsedBirthDate = parseISO(birthDate);
-
-  const developer = developersRepository.create(
-    name,
-    genre,
-    age,
-    hobby,
-    parsedBirthDate,
-  );
-
-  return response.json(developer);
 });
 
 developersRouter.put('/:id', (request, response) => {
   const { id } = request.params;
   const {
-    name, genre, age, hobby, birthDate,
+    name, gender, age, hobby, birthDate,
   } = request.body;
 
   const developerIndex = developers.findIndex(
@@ -56,7 +56,7 @@ developersRouter.put('/:id', (request, response) => {
   const developer = {
     id,
     name,
-    genre,
+    gender,
     age,
     hobby,
     birthDate,
