@@ -12,15 +12,15 @@ Para filtrar utilize método **GET** com query string como no exemplo:
 /developers?name="Joao"&gender="M"
 ```
 Filtros disponíveis:
--**name**: Tipo **string**, o valor passado irá procurar por esta ocorrência dentro da string;
 
--**gender**: Tipo **string**, máximo 1 posição. Passar:
+* **name**: Tipo **string**, o valor passado irá procurar por esta ocorrência dentro da string;
+* **gender**: Tipo **string**, máximo 1 posição. Passar:
 
-  -**"M"**: Masculino
+   * **"M"**: Masculino
 
-  -**"F"**: Feminino
+   * **"F"**: Feminino
 
-  -**"N"**: Não binário/Outro
+  * **"N"**: Não binário/Outro
 
 Para listar os dados de um desenvolvedor em específico, utilizar método **GET** e passar o ID para o endpoint **/developers**, como no exemplo:
 ```
