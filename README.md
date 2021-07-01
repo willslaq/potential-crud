@@ -8,7 +8,7 @@ Para listar todos desenvolvedores envie método **GET** para a rota **/developer
 
 Para filtrar utilize método **GET** com query string como no exemplo:
 
-```
+```javascript
 /developers?name="Joao"&gender="M"
 ```
 Filtros disponíveis:
@@ -23,11 +23,12 @@ Filtros disponíveis:
   * **"N"**: Não binário/Outro
 
 Para listar os dados de um desenvolvedor em específico, utilizar método **GET** e passar o ID para o endpoint **/developers**, como no exemplo:
-```
+```javascript
   /developers/id
 ```
 Tipagem:
--**id**: O ID é um uuid, passar sempre com tipo **string**.
+
+* **id**: O ID é um uuid, passar sempre com tipo **string**.
 
 
 
