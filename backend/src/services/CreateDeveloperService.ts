@@ -1,5 +1,6 @@
+import { getCustomRepository } from 'typeorm';
 import Developer from '../models/Developer';
-import DevelopersRepository from '../models/DevelopersRepository';
+import DevelopersRepository from '../repositories/DevelopersRepository';
 
 interface Request {
   name: string;
@@ -10,32 +11,31 @@ interface Request {
 }
 
 class CreateDevelopersService {
-  private developersRepository: DevelopersRepository;
-
-  constructor(developersRepository: DevelopersRepository) {
-    this.developersRepository = developersRepository;
-  }
-
-  public execute({
+  public async execute({
     age,
     birthDate,
     gender,
     hobby,
     name,
-  }: Request): Developer {
+  }: Request): Promise<Developer> {
+    const developersRepository = getCustomRepository(DevelopersRepository);
+
     if (!name || !gender || !age || !birthDate || !hobby) {
       throw Error(
         '😐[01] Dados incompletos, por favor verifique os dados enviado.',
       );
     }
 
-    const developer = this.developersRepository.create({
+    const developer = developersRepository.create({
       age,
       name,
       gender,
       hobby,
-      birthDate,
+      birthdate: birthDate,
     });
+
+    await developersRepository.save(developer);
+
     return developer;
   }
 }

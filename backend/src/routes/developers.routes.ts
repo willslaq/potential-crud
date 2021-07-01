@@ -1,21 +1,22 @@
 import { Router } from 'express';
 import { parseISO } from 'date-fns';
 
+import { getCustomRepository } from 'typeorm';
 import DevelopersRepository from '../repositories/DevelopersRepository';
 import CreateDeveloperService from '../services/CreateDeveloperService';
 
 const developersRouter = Router();
-const developersRepository = new DevelopersRepository();
 
-developersRouter.get('/', (request, response) => {
-  const developers = developersRepository.all();
+developersRouter.get('/', async (request, response) => {
+  const developersRepository = getCustomRepository(DevelopersRepository);
+  const developers = await developersRepository.find();
 
   return response.json(developers);
 });
 
 developersRouter.get('/:id', (request, response) => response.json(developers));
 
-developersRouter.post('/', (request, response) => {
+developersRouter.post('/', async (request, response) => {
   try {
     const {
       name, gender, age, hobby, birthDate,
@@ -23,9 +24,9 @@ developersRouter.post('/', (request, response) => {
 
     const parsedBirthDate = parseISO(birthDate);
 
-    const createDeveloper = new CreateDeveloperService(developersRepository);
+    const createDeveloper = new CreateDeveloperService();
 
-    const developer = createDeveloper.execute({
+    const developer = await createDeveloper.execute({
       name,
       gender,
       age,

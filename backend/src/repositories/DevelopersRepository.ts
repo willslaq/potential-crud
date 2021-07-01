@@ -1,38 +1,14 @@
+import { EntityRepository, Repository } from 'typeorm';
 import Developer from '../models/Developer';
 
-interface CreateDevelopersDTO {
-  name: string;
-  gender: string;
-  age: number;
-  hobby: string;
-  birthDate: Date;
-}
-
-class DevelopersRepository {
-  private developers: Developer[];
-
-  constructor() {
-    this.developers = [];
-  }
-
-  public all(): Developer[] {
-    return this.developers;
-  }
-
-  public create({
-    age,
-    name,
-    gender,
-    hobby,
-    birthDate,
-  }: CreateDevelopersDTO): Developer {
-    const developer = new Developer({
-      name, gender, age, hobby, birthDate,
+@EntityRepository(Developer)
+class DevelopersRepository extends Repository<Developer> {
+  public async findByGender(gender: string): Promise<Developer[] | null> {
+    const findDeveloper = await this.find({
+      where: { gender },
     });
 
-    this.developers.push(developer);
-
-    return developer;
+    return findDeveloper || null;
   }
 }
 

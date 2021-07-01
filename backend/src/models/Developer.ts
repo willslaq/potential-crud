@@ -1,28 +1,24 @@
-import { uuid } from 'uuidv4';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
+@Entity('developers')
 class Developer {
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Column()
   name: string;
 
+  @Column()
   gender: string;
 
+  @Column()
   age: number;
 
+  @Column()
   hobby: string;
 
-  birthDate: Date;
-
-  constructor({
-    name, gender, age, hobby, birthDate,
-  }: Omit<Developer, 'id'>) {
-    this.id = uuid();
-    this.name = name;
-    this.gender = gender;
-    this.age = age;
-    this.hobby = hobby;
-    this.birthDate = birthDate;
-  }
+  @Column('date')
+  birthdate: Date;
 }
 
 export default Developer;
