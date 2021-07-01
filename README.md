@@ -6,7 +6,7 @@
 ### Listagens
 Para listar todos desenvolvedores envie método **GET** para a rota **/developers**.
 
-Para filtrar utilizar método **GET** com query string como no exemplo:
+Para filtrar utilize método **GET** com query string como no exemplo:
 
 ```
 /developers?name="Joao"&gender="M"
