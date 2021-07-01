@@ -4,11 +4,31 @@ import { parseISO } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import DevelopersRepository from '../repositories/DevelopersRepository';
 import CreateDeveloperService from '../services/CreateDeveloperService';
+import { FilterOption } from '../utils/interfaces';
 
 const developersRouter = Router();
 
 developersRouter.get('/', async (request, response) => {
+  const { name, gender } = request.query as FilterOption;
+
   const developersRepository = getCustomRepository(DevelopersRepository);
+
+  if (gender || name) {
+    const developersByGender = await developersRepository.findByGender({
+      name,
+      gender,
+    });
+
+    if (developersByGender.length > 0) {
+      return response.json(developersByGender);
+    }
+    return response
+      .status(404)
+      .json({ error: '🕵️‍♂️ Nenhum desenvolvedor encontrado' });
+  }
+
+  console.log('saí');
+
   const developers = await developersRepository.find();
 
   return response.json(developers);

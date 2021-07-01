@@ -28,9 +28,9 @@ class CreateDevelopersService {
 
     const developer = developersRepository.create({
       age,
-      name,
-      gender,
-      hobby,
+      name: name.toUpperCase(),
+      gender: gender.toUpperCase(),
+      hobby: hobby.toUpperCase(),
       birthdate: birthDate,
     });
 
