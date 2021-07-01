@@ -25,7 +25,7 @@ Tipagem:
 * **id**: O ID é um uuid, passar sempre com tipo **string**.
   
 
-###Retornos de erro:
+### Retornos de erro:
  
  **[01] Dados incompletos, por favor verifique os dados enviado.**  
   -Verificar se a estrutura do JSON enviado está completa, com todas as chaves e valores necessários.
