@@ -8,8 +8,8 @@ class FindDeveloperByIdService {
   public async execute({ id }: RequestId): Promise<Developer | null> {
     const developersRepository = getCustomRepository(DevelopersRepository);
 
-    if (!isUuid) {
-      throw Error('😐[02] Informe um uuid válido.');
+    if (!isUuid(id)) {
+      throw Error('😐 [02] Informe um uuid válido.');
     }
 
     const developer = await developersRepository.findOne({ id });

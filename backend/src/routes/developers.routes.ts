@@ -26,7 +26,7 @@ developersRouter.get('/', async (request, response) => {
     }
     return response
       .status(404)
-      .json({ error: '🕵️‍♂️ [06]Nenhum desenvolvedor encontrado' });
+      .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor encontrado' });
   }
 
   const developers = await developersRepository.find();
@@ -42,9 +42,14 @@ developersRouter.get('/:id', async (request, response) => {
 
     const developer = await findDeveloperById.execute({ id });
 
+    if (!developer) {
+      response
+        .status(404)
+        .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor encontrado' });
+    }
     return response.json(developer);
   } catch (error) {
-    return response.status(400).json({ error: error.message });
+    return response.status(500).json({ error: error.message });
   }
 });
 
@@ -66,7 +71,7 @@ developersRouter.post('/', async (request, response) => {
       birthDate: parsedBirthDate,
     });
 
-    return response.json(developer);
+    return response.status(201).json(developer);
   } catch (error) {
     return response.status(400).json({ error: error.message });
   }
@@ -100,26 +105,29 @@ developersRouter.put('/:id', async (request, response) => {
 });
 
 developersRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params;
+  try {
+    const { id } = request.params;
 
-  if (!id) {
-    return response
-      .status(400)
-      .json({ error: '🤔[05] Informe um ID a ser deletado' });
+    if (!id) {
+      return response
+        .status(400)
+        .json({ error: '🤔 [05] Informe um ID a ser deletado' });
+    }
+
+    const developersRepository = getCustomRepository(DevelopersRepository);
+    const result = await developersRepository.findOne({ id });
+    if (!result) {
+      return response
+        .status(404)
+        .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor com este ID encontrado' });
+    }
+
+    await developersRepository.delete({ id });
+
+    return response.status(204).send();
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
   }
-
-  const developersRepository = getCustomRepository(DevelopersRepository);
-  const result = await developersRepository.findOne({ id });
-  if (!result) {
-    return response
-      .status(404)
-      .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor com este ID encontrado' });
-  }
-  console.log('result', result);
-
-  await developersRepository.delete({ id });
-
-  return response.status(204).send();
 });
 
 export default developersRouter;

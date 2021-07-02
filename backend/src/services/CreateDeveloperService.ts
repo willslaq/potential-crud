@@ -15,7 +15,7 @@ class CreateDevelopersService {
 
     if (!name || !gender || !age || !birthDate || !hobby) {
       throw Error(
-        '😐[01] Dados incompletos, por favor verifique os dados enviados.',
+        '😐 [01] Dados incompletos, por favor verifique os dados enviados.',
       );
     }
 

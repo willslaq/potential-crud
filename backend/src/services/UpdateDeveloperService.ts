@@ -1,5 +1,6 @@
-import { getConnection } from 'typeorm';
+import { getConnection, getCustomRepository } from 'typeorm';
 import Developer from '../models/Developer';
+import DevelopersRepository from '../repositories/DevelopersRepository';
 import {
   DatabaseDeveloperDTO,
   RequestDeveloperDTO,
@@ -14,12 +15,19 @@ class UpdateDeveloperService {
       age, birthDate, gender, hobby, name,
     }: RequestDeveloperDTO,
   ): Promise<string> {
+    const developersRepository = getCustomRepository(DevelopersRepository);
+    const hasDeveloper = await developersRepository.findOne({ id });
+
+    if (!hasDeveloper) {
+      throw Error('🕵️‍♂️ [06] Nenhum desenvolvedor com este ID encontrado');
+    }
+
     if (!id) {
-      throw Error('😐[03] Para atualizar um registro, informe um ID');
+      throw Error('😐 [03] Para atualizar um registro, informe um ID');
     }
 
     if (!age && !isValidDate(birthDate) && !gender && !hobby && !name) {
-      throw Error('😐[04] Informe ao menos um parâmetro a ser atualizado');
+      throw Error('😐 [04] Informe ao menos um parâmetro a ser atualizado');
     }
 
     const developerUpdateObject = {} as DatabaseDeveloperDTO;
@@ -47,7 +55,7 @@ class UpdateDeveloperService {
       .where('id = :id', { id })
       .execute();
 
-    return 'Produto atualizado com sucesso';
+    return 'Developer atualizado com sucesso';
   }
 }
 
