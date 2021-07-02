@@ -2,18 +2,28 @@ import { EntityRepository, Like, Repository } from 'typeorm';
 import Developer from '../models/Developer';
 import { FilterOption } from '../utils/interfaces';
 
+interface WhereTypes {
+  gender?: string;
+  name?: string;
+}
+
 @EntityRepository(Developer)
 class DevelopersRepository extends Repository<Developer> {
-  public async findByGender({
+  public async findWithFilter({
     gender,
     name,
   }: FilterOption): Promise<Developer[]> {
-    console.log('to filtrando', { name, gender });
-    const findDeveloper = await this.find({
-      where: gender
-        ? { gender: gender.toLocaleUpperCase() }
-        : { name: Like(`%${name?.toUpperCase()}%`) },
-    });
+    const whereMount = {} as WhereTypes;
+
+    if (gender) {
+      whereMount.gender = gender.toUpperCase();
+    }
+
+    if (name) {
+      whereMount.name = Like(`%${name.toUpperCase()}%`);
+    }
+
+    const findDeveloper = await this.find({ where: whereMount });
 
     return findDeveloper;
   }

@@ -32,7 +32,7 @@ Para cadastrar enviar **JSON** no corpo da requisição por método **POST** par
     "gender": "m",
     "age": 22,
     "hobby": "Ver o ar livre",
-    "birthDate": "20-05-1999"
+    "birthDate": "1999-05-20"
   }
 ```
 Tipagem:  
@@ -43,9 +43,9 @@ Tipagem:
   * **N**: Não binário/Outro  
 * **age**: Passar a idade do desenvolvedor, tipo **integer** `Obrigatório`  
 * **hobby**: Passar o passatempo/diversão do desenvolvedor, tipo **string** `Obrigatório`  
-* **birthDate**: Passar a data de nascimento do desenvolvedor, tipo **Date**, no formato **DD-MM-AAAA** `Obrigatório`  
+* **birthDate**: Passar a data de nascimento do desenvolvedor, tipo **Date**, no formato **AAAA-MM-DD**(timestamp) `Obrigatório`  
 
-### Retornos de erro:
+### Retornos de erros:
  
- **[01] Dados incompletos, por favor verifique os dados enviado.**  
+ **[01] Dados incompletos, por favor verifique os dados enviados.**  
   -Verificar se a estrutura do JSON enviado está completa, com todas as chaves e valores necessários.

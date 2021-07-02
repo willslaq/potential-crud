@@ -5,6 +5,8 @@ import { getCustomRepository } from 'typeorm';
 import DevelopersRepository from '../repositories/DevelopersRepository';
 import CreateDeveloperService from '../services/CreateDeveloperService';
 import { FilterOption } from '../utils/interfaces';
+import FindDeveloperByIdService from '../services/FindDeveloperByIdService';
+import UpdateDeveloperService from '../services/UpdateDeveloperService';
 
 const developersRouter = Router();
 
@@ -14,7 +16,7 @@ developersRouter.get('/', async (request, response) => {
   const developersRepository = getCustomRepository(DevelopersRepository);
 
   if (gender || name) {
-    const developersByGender = await developersRepository.findByGender({
+    const developersByGender = await developersRepository.findWithFilter({
       name,
       gender,
     });
@@ -24,17 +26,27 @@ developersRouter.get('/', async (request, response) => {
     }
     return response
       .status(404)
-      .json({ error: '🕵️‍♂️ Nenhum desenvolvedor encontrado' });
+      .json({ error: '🕵️‍♂️ [06]Nenhum desenvolvedor encontrado' });
   }
-
-  console.log('saí');
 
   const developers = await developersRepository.find();
 
   return response.json(developers);
 });
 
-developersRouter.get('/:id', (request, response) => response.json(developers));
+developersRouter.get('/:id', async (request, response) => {
+  try {
+    const { id } = request.params;
+
+    const findDeveloperById = new FindDeveloperByIdService();
+
+    const developer = await findDeveloperById.execute({ id });
+
+    return response.json(developer);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
+  }
+});
 
 developersRouter.post('/', async (request, response) => {
   try {
@@ -60,46 +72,52 @@ developersRouter.post('/', async (request, response) => {
   }
 });
 
-developersRouter.put('/:id', (request, response) => {
-  const { id } = request.params;
-  const {
-    name, gender, age, hobby, birthDate,
-  } = request.body;
+developersRouter.put('/:id', async (request, response) => {
+  try {
+    const {
+      name, gender, age, hobby, birthDate,
+    } = request.body;
+    const { id } = request.params;
 
-  const developerIndex = developers.findIndex(
-    (developer) => developer.id === id,
-  );
+    const parsedBirthDate = parseISO(birthDate);
 
-  if (developerIndex < 0) {
-    return response.status(400).json({ error: '🕵️‍♂️ Developer not found' });
+    const updateDeveloper = new UpdateDeveloperService();
+
+    const result = await updateDeveloper.execute(
+      { id },
+      {
+        age,
+        birthDate: parsedBirthDate,
+        gender,
+        hobby,
+        name,
+      },
+    );
+    return response.json(result);
+  } catch (error) {
+    return response.status(400).json({ error: error.message });
   }
-
-  const developer = {
-    id,
-    name,
-    gender,
-    age,
-    hobby,
-    birthDate,
-  };
-
-  developers[developerIndex] = developer;
-
-  return response.json(developer);
 });
 
-developersRouter.delete('/:id', (request, response) => {
+developersRouter.delete('/:id', async (request, response) => {
   const { id } = request.params;
 
-  const developerIndex = developers.findIndex(
-    (developer) => developer.id === id,
-  );
-
-  if (developerIndex < 0) {
-    return response.status(400).json({ error: '🕵️‍♂️ Developer not found' });
+  if (!id) {
+    return response
+      .status(400)
+      .json({ error: '🤔[05] Informe um ID a ser deletado' });
   }
 
-  developers.splice(developerIndex, 1);
+  const developersRepository = getCustomRepository(DevelopersRepository);
+  const result = await developersRepository.findOne({ id });
+  if (!result) {
+    return response
+      .status(404)
+      .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor com este ID encontrado' });
+  }
+  console.log('result', result);
+
+  await developersRepository.delete({ id });
 
   return response.status(204).send();
 });

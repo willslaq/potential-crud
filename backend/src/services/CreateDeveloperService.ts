@@ -1,14 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 import Developer from '../models/Developer';
 import DevelopersRepository from '../repositories/DevelopersRepository';
-
-interface Request {
-  name: string;
-  gender: string;
-  age: number;
-  hobby: string;
-  birthDate: Date;
-}
+import { RequestDeveloperDTO } from '../utils/interfaces';
 
 class CreateDevelopersService {
   public async execute({
@@ -17,12 +10,12 @@ class CreateDevelopersService {
     gender,
     hobby,
     name,
-  }: Request): Promise<Developer> {
+  }: RequestDeveloperDTO): Promise<Developer> {
     const developersRepository = getCustomRepository(DevelopersRepository);
 
     if (!name || !gender || !age || !birthDate || !hobby) {
       throw Error(
-        '😐[01] Dados incompletos, por favor verifique os dados enviado.',
+        '😐[01] Dados incompletos, por favor verifique os dados enviados.',
       );
     }
 
