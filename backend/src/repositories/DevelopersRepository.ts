@@ -1,10 +1,12 @@
-import { EntityRepository, Like, Repository } from 'typeorm';
+import {
+  EntityRepository, FindOperator, Like, Repository,
+} from 'typeorm';
 import Developer from '../models/Developer';
 import { FilterOption } from '../utils/interfaces';
 
 interface WhereTypes {
   gender?: string;
-  name?: string;
+  name?: FindOperator<string>;
 }
 
 @EntityRepository(Developer)

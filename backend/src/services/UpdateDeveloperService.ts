@@ -5,6 +5,7 @@ import {
   RequestDeveloperDTO,
   RequestId,
 } from '../utils/interfaces';
+import isValidDate from '../utils/isValidDate';
 
 class UpdateDeveloperService {
   public async execute(
@@ -17,7 +18,7 @@ class UpdateDeveloperService {
       throw Error('😐[03] Para atualizar um registro, informe um ID');
     }
 
-    if (!age && !birthDate && !gender && hobby && name) {
+    if (!age && !isValidDate(birthDate) && !gender && !hobby && !name) {
       throw Error('😐[04] Informe ao menos um parâmetro a ser atualizado');
     }
 
@@ -26,7 +27,7 @@ class UpdateDeveloperService {
     if (age) {
       developerUpdateObject.age = age;
     }
-    if (!Number.isNaN(birthDate.getTime())) {
+    if (isValidDate(birthDate)) {
       developerUpdateObject.birthdate = birthDate;
     }
     if (gender) {
