@@ -1,6 +1,7 @@
 import { getConnection, getCustomRepository } from 'typeorm';
 import Developer from '../models/Developer';
 import DevelopersRepository from '../repositories/DevelopersRepository';
+import getAge from '../utils/getAge';
 import {
   DatabaseDeveloperDTO,
   RequestDeveloperDTO,
@@ -12,7 +13,7 @@ class UpdateDeveloperService {
   public async execute(
     { id }: RequestId,
     {
-      age, birthDate, gender, hobby, name,
+      birthDate, gender, hobby, name,
     }: RequestDeveloperDTO,
   ): Promise<string> {
     const developersRepository = getCustomRepository(DevelopersRepository);
@@ -26,17 +27,15 @@ class UpdateDeveloperService {
       throw Error('😐 [03] Para atualizar um registro, informe um ID');
     }
 
-    if (!age && !isValidDate(birthDate) && !gender && !hobby && !name) {
+    if (!isValidDate(birthDate) && !gender && !hobby && !name) {
       throw Error('😐 [04] Informe ao menos um parâmetro a ser atualizado');
     }
 
     const developerUpdateObject = {} as DatabaseDeveloperDTO;
 
-    if (age) {
-      developerUpdateObject.age = age;
-    }
     if (isValidDate(birthDate)) {
       developerUpdateObject.birthdate = birthDate;
+      developerUpdateObject.age = getAge(birthDate);
     }
     if (gender) {
       developerUpdateObject.gender = gender.toUpperCase();
