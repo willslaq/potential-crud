@@ -1,32 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import api from '../../services/api';
+import { Typography } from '@material-ui/core';
+import React, { useContext } from 'react';
+import { DevelopersContext } from '../../providers/DevelopersContext';
 import DeveloperCard from '../DeveloperCard';
 
 export default function DevelopersList() {
-  const [developers, setDevelopers] = useState([]);
-
-  useEffect(() => {
-    async function fetchDevelopers() {
-      const response = await api.get('/developers');
-      setDevelopers(response.data);
-    }
-
-    fetchDevelopers();
-  }, []);
+  const { developers } = useContext(DevelopersContext);
 
   return (
     <>
-      {developers && developers.map((developer) => (
-        <DeveloperCard
-          key={developer.id}
-          id={developer.id}
-          name={developer.name}
-          gender={developer.gender}
-          age={developer.age}
-          hobby={developer.hobby}
-          birthDate={developer.birthDate}
-        />
-      ))}
+      {developers ? (
+        developers.map((developer) => (
+          <DeveloperCard
+            key={developer.id}
+            id={developer.id}
+            name={developer.name}
+            gender={developer.gender}
+            age={developer.age}
+            hobby={developer.hobby}
+            birthDate={developer.birthDate}
+          />
+        ))
+      ) : (
+        <Typography>Cadastre um novo desenvolvedor</Typography>
+      )}
     </>
   );
 }

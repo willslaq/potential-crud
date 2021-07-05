@@ -1,14 +1,12 @@
 import React from 'react';
-import {
-  Grid, Paper, Typography,
-} from '@material-ui/core';
+import { Grid, Paper, Typography } from '@material-ui/core';
 
 import avatar1 from '../../assets/avatars/avatar1.jpg';
 import avatar2 from '../../assets/avatars/avatar2.jpg';
 import avatar3 from '../../assets/avatars/avatar3.jpg';
 import avatar4 from '../../assets/avatars/avatar4.jpg';
 import { useStyles } from './styles';
-import DevDataModal from '../DeveloperModal/inde';
+import DeveloperModal from '../DeveloperModal/index';
 
 // import api from '../../services/api';
 
@@ -23,12 +21,10 @@ function DeveloperCard(props) {
   const classes = useStyles();
 
   const {
-    // id,
+    id,
     name,
     // gender,
     age,
-    // hobby,
-    //  birthDate,
   } = props;
 
   function randomizeImage(min, max) {
@@ -51,13 +47,13 @@ function DeveloperCard(props) {
             className={classes.cardImage}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={4} className={classes.nameWrapper}>
           <Typography variant="h5" gutterBottom color="secondary">
             {`${name}, ${age}`}
           </Typography>
         </Grid>
-        <Grid item xs={4}>
-          <DevDataModal />
+        <Grid item xs={4} className={classes.buttonWrapper}>
+          <DeveloperModal id={id} />
         </Grid>
       </Grid>
     </Paper>

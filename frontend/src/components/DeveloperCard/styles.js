@@ -5,8 +5,21 @@ export const useStyles = makeStyles(() => ({
     borderRadius: 60,
     backgroundColor: 'var(--pantone)',
     display: 'flex',
+    padding: 10,
+    margin: 10,
   },
   cardImage: {
-    width: 100,
+    height: 100,
+    borderRadius: '50%',
+  },
+  buttonWrapper: {
+    paddingRight: '50px',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+  nameWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }));
