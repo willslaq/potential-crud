@@ -11,7 +11,9 @@ import UpdateDeveloperService from '../services/UpdateDeveloperService';
 const developersRouter = Router();
 
 developersRouter.get('/', async (request, response) => {
-  const { name, gender } = request.query as FilterOption;
+  const {
+    name, gender, page = 1, limit = 1,
+  } = request.query as FilterOption;
 
   const developersRepository = getCustomRepository(DevelopersRepository);
 
@@ -19,6 +21,8 @@ developersRouter.get('/', async (request, response) => {
     const developersByGender = await developersRepository.findWithFilter({
       name,
       gender,
+      page,
+      limit,
     });
 
     if (developersByGender.length > 0) {
@@ -29,9 +33,18 @@ developersRouter.get('/', async (request, response) => {
       .json({ error: '🕵️‍♂️ [06] Nenhum desenvolvedor encontrado' });
   }
 
-  const developers = await developersRepository.find();
+  const { count } = await developersRepository
+    .createQueryBuilder('developer')
+    .select('COUNT(*)', 'count')
+    .getRawOne();
 
-  return response.json(developers);
+  const developers = await developersRepository
+    .createQueryBuilder('developer')
+    .offset((page - 1) * limit)
+    .limit(limit)
+    .getMany();
+
+  return response.header('X-Total-Count', count).json(developers);
 });
 
 developersRouter.get('/:id', async (request, response) => {

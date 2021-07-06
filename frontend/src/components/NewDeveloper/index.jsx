@@ -1,4 +1,3 @@
-import DateFnsUtils from '@date-io/date-fns';
 import {
   Dialog,
   DialogActions,
@@ -9,9 +8,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import React, { useContext, useState } from 'react';
-import { DevelopersContext } from '../../providers/DevelopersContext';
+import React, { useState } from 'react';
 import api from '../../services/api';
 import RoundedButton from '../RoundedButton';
 import { useStyles } from './styles';
@@ -23,8 +20,6 @@ export default function NewDeveloper() {
   const [hobby, setHobby] = useState();
   const [birthDate, setBirthDate] = useState();
   const classes = useStyles();
-
-  const { developers, setDevelopers } = useContext(DevelopersContext);
 
   const handleClickOpen = async () => {
     setOpen(true);
@@ -43,7 +38,6 @@ export default function NewDeveloper() {
     };
     const response = api.post('/developers', data);
     setOpen(false);
-    setDevelopers([...developers, response.data]);
     return response;
   }
 
@@ -82,29 +76,14 @@ export default function NewDeveloper() {
               />
             </Grid>
             <Grid item xs={12}>
-              <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <KeyboardDatePicker
-                  disableToolbar
-                  variant="inline"
-                  format="MM/dd/yyyy"
-                  margin="normal"
-                  id="date-picker-inline"
-                  label="Date picker inline"
-                  value={birthDate}
-                  onChange={(date) => {
-                    setBirthDate(date);
-                  }}
-                  KeyboardButtonProps={{
-                    'aria-label': 'Data',
-                  }}
-                />
-              </MuiPickersUtilsProvider>
-              {/* <TextField
+              <TextField
                 label="Data de nascimento"
                 value={birthDate}
+                type="date"
+                defaultvalue="DD/MM/AAAA"
                 fullWidth
                 onChange={(e) => setBirthDate(e.target.value)}
-              /> */}
+              />
             </Grid>
           </Grid>
         </DialogContent>

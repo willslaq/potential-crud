@@ -1,11 +1,20 @@
 import { Grid, IconButton, InputBase } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SearchRoundedIcon from '@material-ui/icons/SearchRounded';
 import { useStyles } from './styles';
+import api from '../../services/api';
+import { DevelopersContext } from '../../providers/DevelopersContext';
 
 export default function SearchBar() {
   const classes = useStyles();
+  const { setDevelopers } = useContext(DevelopersContext);
   const [searchValue, setSearchValue] = useState('');
+
+  async function fetchDevelopers() {
+    const response = await api.get(`/developers?name=${searchValue}`);
+
+    setDevelopers(response.data);
+  }
 
   return (
     <>
@@ -25,7 +34,10 @@ export default function SearchBar() {
           </div>
         </Grid>
         <Grid item>
-          <IconButton className={classes.searchButton}>
+          <IconButton
+            className={classes.searchButton}
+            onClick={fetchDevelopers}
+          >
             <SearchRoundedIcon />
           </IconButton>
         </Grid>

@@ -18,7 +18,6 @@ export default function DeveloperModal({ id }) {
   const [developer, setDeveloper] = useState({});
   const [name, setName] = useState();
   const [gender, setGender] = useState();
-  const [age, setAge] = useState();
   const [hobby, setHobby] = useState();
   const [birthDate, setBirthDate] = useState();
   const classes = useStyles();
@@ -27,7 +26,6 @@ export default function DeveloperModal({ id }) {
     if (developer) {
       setName(developer.name);
       setGender(developer.gender);
-      setAge(developer.age);
       setHobby(developer.hobby);
       setBirthDate(developer.birthDate);
     }
@@ -59,18 +57,6 @@ export default function DeveloperModal({ id }) {
     return response;
   }
 
-  async function saveNew() {
-    const data = {
-      name,
-      gender,
-      hobby,
-      birthDate,
-    };
-    const response = api.post('/developers', data);
-    setOpen(false);
-    return response;
-  }
-
   return (
     <>
       <IconButton onClick={handleClickOpen} className={classes.button}>
@@ -86,15 +72,6 @@ export default function DeveloperModal({ id }) {
                 value={name}
                 fullWidth
                 onChange={(e) => setName(e.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                label="Idade"
-                value={age}
-                disabled
-                fullWidth
-                onChange={(e) => setAge(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -138,7 +115,7 @@ export default function DeveloperModal({ id }) {
             <RoundedButton
               variant="contained"
               color="primary"
-              onClick={id ? saveUpdate : saveNew}
+              onClick={saveUpdate}
               fullWidth
             >
               Salvar

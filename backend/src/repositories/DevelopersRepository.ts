@@ -7,6 +7,7 @@ import { FilterOption } from '../utils/interfaces';
 interface WhereTypes {
   gender?: string;
   name?: FindOperator<string>;
+  count?: number;
 }
 
 @EntityRepository(Developer)
@@ -14,6 +15,8 @@ class DevelopersRepository extends Repository<Developer> {
   public async findWithFilter({
     gender,
     name,
+    page = 1,
+    limit = 10,
   }: FilterOption): Promise<Developer[]> {
     const whereMount = {} as WhereTypes;
 
@@ -25,7 +28,10 @@ class DevelopersRepository extends Repository<Developer> {
       whereMount.name = Like(`%${name.toUpperCase()}%`);
     }
 
-    const findDeveloper = await this.find({ where: whereMount });
+    const findDeveloper = await this.createQueryBuilder('developer')
+      .offset((page - 1) * limit)
+      .limit(limit)
+      .getMany();
 
     return findDeveloper;
   }
