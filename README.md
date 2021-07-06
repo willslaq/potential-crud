@@ -30,7 +30,6 @@ Para cadastrar enviar **JSON** no corpo da requisição por método **POST** par
   {
     "name": "José das Couve",
     "gender": "m",
-    "age": 22,
     "hobby": "Ver o ar livre",
     "birthDate": "1999-05-20"
   }
@@ -41,7 +40,6 @@ Tipagem:
   * **M**: Masculino  
   * **F**: Feminino  
   * **N**: Não binário/Outro  
-* **age**: Passar a idade do desenvolvedor, tipo **integer** `Obrigatório`  
 * **hobby**: Passar o passatempo/diversão do desenvolvedor, tipo **string** `Obrigatório`  
 * **birthDate**: Passar a data de nascimento do desenvolvedor, tipo **Date**, no formato **AAAA-MM-DD**(timestamp) `Obrigatório`  
 
