@@ -40,8 +40,8 @@ developersRouter.get('/', async (request, response) => {
 
   const developers = await developersRepository
     .createQueryBuilder('developer')
-    .offset((page - 1) * limit)
-    .limit(limit)
+    .offset((page - 1) * count)
+    .limit(count)
     .getMany();
 
   return response.header('X-Total-Count', count).json(developers);
