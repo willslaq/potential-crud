@@ -1,6 +1,8 @@
 export interface FilterOption {
   name?: string;
   gender?: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface RequestId {
