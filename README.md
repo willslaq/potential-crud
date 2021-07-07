@@ -1,5 +1,16 @@
 ﻿# potential-crud
 
+## Instalação
+Para instalar, apenas clonar o projeto e executar dentro da pasta Frontend o comando `yarn install` e dentro da pasta backend `yarn install`
+
+Para rodar o projeto, na pasta frontend executar `yarn start`. Irá executar o SPA e na pasta backend, executar o comando `yarn dev:server` para iniciar a API.
+
+O banco de dados, comando utilizado para gerar o container docker do banco:
+`docker run --name gazin_postgres -e POSTGRES_PASSWORD=gazin -p 5432:5432 -d postgres`
+
+Após instalar o banco e o backend, para iniciar o banco, criar um schema chamado potential_crud e executar as migrations com o comando:
+`yarn typeorm migration:run`
+
 
 ## Backend(API)
 
