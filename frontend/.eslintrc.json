@@ -15,6 +15,10 @@
   "rules": {
     "import/prefer-default-export": "off",
     "must-use-single-quoted-strings": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "linebreak-style": [
+      "error",
+      "windows"
+    ]
   }
 }
