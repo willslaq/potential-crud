@@ -1,12 +1,18 @@
 import {
+  FormControlLabel,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
   Grid,
   IconButton,
   TextField,
 } from '@material-ui/core';
+
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
 import React, { useState } from 'react';
 import api from '../../services/api';
@@ -23,6 +29,9 @@ export default function NewDeveloper() {
 
   const handleClickOpen = async () => {
     setOpen(true);
+    setName('');
+    setHobby('');
+    setBirthDate('');
   };
 
   const handleClose = () => {
@@ -46,10 +55,14 @@ export default function NewDeveloper() {
       <IconButton onClick={handleClickOpen} className={classes.addButton}>
         <AddRoundedIcon />
       </IconButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{ style: { borderRadius: 26 } }}
+      >
         <DialogTitle>Desenvolvedor</DialogTitle>
         <DialogContent>
-          <Grid container>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <TextField
                 label="Nome"
@@ -59,12 +72,31 @@ export default function NewDeveloper() {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label="Gênero"
-                value={gender}
-                fullWidth
-                onChange={(e) => setGender(e.target.value)}
-              />
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Gênero</FormLabel>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <FormControlLabel
+                    value="M"
+                    control={<Radio />}
+                    label="Masculino"
+                  />
+                  <FormControlLabel
+                    value="F"
+                    control={<Radio />}
+                    label="Feminino"
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio />}
+                    label="Não binarie/Outro"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <TextField

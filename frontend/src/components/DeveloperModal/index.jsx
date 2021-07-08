@@ -3,12 +3,18 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  RadioGroup,
+  Radio,
   Grid,
   IconButton,
   TextField,
 } from '@material-ui/core';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { DevelopersContext } from '../../providers/DevelopersContext';
 import api from '../../services/api';
 import RoundedButton from '../RoundedButton';
 import { useStyles } from './styles';
@@ -20,6 +26,7 @@ export default function DeveloperModal({ id }) {
   const [gender, setGender] = useState();
   const [hobby, setHobby] = useState();
   const [birthDate, setBirthDate] = useState();
+  const { developers, setDevelopers } = useContext(DevelopersContext);
   const classes = useStyles();
 
   useEffect(() => {
@@ -27,6 +34,7 @@ export default function DeveloperModal({ id }) {
       setName(developer.name);
       setGender(developer.gender);
       setHobby(developer.hobby);
+      console.log('birthDate', developer.birthDate);
       setBirthDate(developer.birthDate);
     }
   }, [developer]);
@@ -54,6 +62,7 @@ export default function DeveloperModal({ id }) {
     };
     const response = api.put(`/developers/${id}`, data);
     setOpen(false);
+    setDevelopers([...developers, response]);
     return response;
   }
 
@@ -62,7 +71,11 @@ export default function DeveloperModal({ id }) {
       <IconButton onClick={handleClickOpen} className={classes.button}>
         <EditRoundedIcon />
       </IconButton>
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        PaperProps={{ style: { borderRadius: 26 } }}
+      >
         <DialogTitle>Desenvolvedor</DialogTitle>
         <DialogContent>
           <Grid container>
@@ -75,12 +88,31 @@ export default function DeveloperModal({ id }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label="Gênero"
-                value={gender}
-                fullWidth
-                onChange={(e) => setGender(e.target.value)}
-              />
+              <FormControl component="fieldset">
+                <FormLabel component="legend">Gênero</FormLabel>
+                <RadioGroup
+                  aria-label="gender"
+                  name="gender"
+                  value={gender}
+                  onChange={(e) => setGender(e.target.value)}
+                >
+                  <FormControlLabel
+                    value="M"
+                    control={<Radio />}
+                    label="Masculino"
+                  />
+                  <FormControlLabel
+                    value="F"
+                    control={<Radio />}
+                    label="Feminino"
+                  />
+                  <FormControlLabel
+                    value="N"
+                    control={<Radio />}
+                    label="Não binarie/Outro"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <TextField
@@ -95,6 +127,8 @@ export default function DeveloperModal({ id }) {
               <TextField
                 label="Data de nascimento"
                 value={birthDate}
+                type="date"
+                defaultvalue={birthDate}
                 fullWidth
                 onChange={(e) => setBirthDate(e.target.value)}
               />
