@@ -14,7 +14,6 @@ const imagesToRandomize = {
   1: avatar1,
   2: avatar2,
   3: avatar3,
-  4: avatar4,
 };
 
 function DeveloperCard(props) {
@@ -23,7 +22,7 @@ function DeveloperCard(props) {
   const {
     id,
     name,
-    // gender,
+    gender,
     age,
   } = props;
 
@@ -42,7 +41,10 @@ function DeveloperCard(props) {
       <Grid container>
         <Grid item xs={4}>
           <img
-            src={imagesToRandomize[randomizeImage(1, 4)]}
+            src={
+              // eslint-disable-next-line eqeqeq
+              gender != 'M' ? imagesToRandomize[randomizeImage(1, 3)] : avatar4
+            }
             alt="Avatar"
             className={classes.cardImage}
           />

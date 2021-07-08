@@ -15,8 +15,6 @@ class DevelopersRepository extends Repository<Developer> {
   public async findWithFilter({
     gender,
     name,
-    page = 1,
-    limit = 10,
   }: FilterOption): Promise<Developer[]> {
     const whereMount = {} as WhereTypes;
 
@@ -28,10 +26,7 @@ class DevelopersRepository extends Repository<Developer> {
       whereMount.name = Like(`%${name.toUpperCase()}%`);
     }
 
-    const findDeveloper = await this.createQueryBuilder('developer')
-      .offset((page - 1) * limit)
-      .limit(limit)
-      .getMany();
+    const findDeveloper = await this.find({ where: whereMount });
 
     return findDeveloper;
   }

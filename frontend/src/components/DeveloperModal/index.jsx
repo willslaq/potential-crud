@@ -21,10 +21,10 @@ import { useStyles } from './styles';
 export default function DeveloperModal({ id }) {
   const [open, setOpen] = useState(false);
   const [developer, setDeveloper] = useState({});
-  const [name, setName] = useState();
-  const [gender, setGender] = useState();
-  const [hobby, setHobby] = useState();
-  const [birthDate, setBirthDate] = useState();
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('M');
+  const [hobby, setHobby] = useState('');
+  const [birthDate, setBirthDate] = useState('');
   const classes = useStyles();
 
   useEffect(() => {
@@ -32,8 +32,8 @@ export default function DeveloperModal({ id }) {
       setName(developer.name);
       setGender(developer.gender);
       setHobby(developer.hobby);
-      console.log('birthDate', developer.birthDate);
-      setBirthDate(developer.birthDate);
+      console.log('developer', developer);
+      setBirthDate(developer.birthdate);
     }
   }, [developer]);
 

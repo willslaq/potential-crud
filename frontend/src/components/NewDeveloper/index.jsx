@@ -22,10 +22,10 @@ import { useStyles } from './styles';
 
 export default function NewDeveloper() {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState();
-  const [gender, setGender] = useState();
-  const [hobby, setHobby] = useState();
-  const [birthDate, setBirthDate] = useState();
+  const [name, setName] = useState('');
+  const [gender, setGender] = useState('M');
+  const [hobby, setHobby] = useState('');
+  const [birthDate, setBirthDate] = useState('');
   const { developers, setDevelopers } = useContext(DevelopersContext);
   const classes = useStyles();
 
@@ -49,7 +49,6 @@ export default function NewDeveloper() {
     };
     const response = await api.post('/developers', data);
     setDevelopers([...developers, response.data]);
-    console.log('response', response);
     setOpen(false);
     return response;
   }
