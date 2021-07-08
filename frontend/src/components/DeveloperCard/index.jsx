@@ -20,10 +20,7 @@ function DeveloperCard(props) {
   const classes = useStyles();
 
   const {
-    id,
-    name,
-    gender,
-    age,
+    id, name, gender, age,
   } = props;
 
   function randomizeImage(min, max) {
@@ -49,8 +46,13 @@ function DeveloperCard(props) {
             className={classes.cardImage}
           />
         </Grid>
-        <Grid item xs={4} className={classes.nameWrapper}>
-          <Typography variant="h5" gutterBottom color="secondary">
+        <Grid item xs={4} className={classes.cardTitleWrapper}>
+          <Typography
+            variant="h5"
+            gutterBottom
+            color="secondary"
+            className={classes.cardTitle}
+          >
             {`${name}, ${age}`}
           </Typography>
         </Grid>

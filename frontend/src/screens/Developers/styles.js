@@ -13,4 +13,10 @@ export const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: 50,
   },
+  container: {
+    paddingBottom: 20,
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+    },
+  },
 }));

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   addButton: {
     backgroundColor: 'var(--primary)',
     color: 'var(--pantone)',
@@ -15,6 +15,10 @@ export const useStyles = makeStyles(() => ({
       opacity: 0.8,
       backgroundColor: 'var(--primary)',
       transition: 'opacity 0.3s',
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: 50,
+      height: 50,
     },
   },
 }));

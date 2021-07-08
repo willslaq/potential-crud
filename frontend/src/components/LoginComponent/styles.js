@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   container: {
     height: '100%',
     display: 'flex',
@@ -11,6 +11,9 @@ export const useStyles = makeStyles(() => ({
 
   logo: {
     width: 500,
+    [theme.breakpoints.down('sm')]: {
+      width: '80%',
+    },
   },
 
   buttonWrapper: {

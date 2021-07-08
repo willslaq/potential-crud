@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-export const useStyles = makeStyles(() => ({
+export const useStyles = makeStyles((theme) => ({
   container: {
     borderRadius: 60,
     backgroundColor: 'var(--pantone)',
@@ -13,13 +13,19 @@ export const useStyles = makeStyles(() => ({
     borderRadius: '50%',
   },
   buttonWrapper: {
-    paddingRight: '50px',
+    paddingRight: 50,
     display: 'flex',
     justifyContent: 'flex-end',
+    [theme.breakpoints.down('sm')]: {
+      paddingRight: 10,
+    },
   },
-  nameWrapper: {
+  cardTitleWrapper: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  cardTitle: {
+    fontSize: '1rem',
   },
 }));
