@@ -32,7 +32,6 @@ export default function DeveloperModal({ id }) {
       setName(developer.name);
       setGender(developer.gender);
       setHobby(developer.hobby);
-      console.log('developer', developer);
       setBirthDate(developer.birthdate);
     }
   }, [developer]);
