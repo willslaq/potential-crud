@@ -14,7 +14,8 @@ import {
 } from '@material-ui/core';
 
 import AddRoundedIcon from '@material-ui/icons/AddRounded';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { DevelopersContext } from '../../providers/DevelopersContext';
 import api from '../../services/api';
 import RoundedButton from '../RoundedButton';
 import { useStyles } from './styles';
@@ -25,6 +26,7 @@ export default function NewDeveloper() {
   const [gender, setGender] = useState();
   const [hobby, setHobby] = useState();
   const [birthDate, setBirthDate] = useState();
+  const { developers, setDevelopers } = useContext(DevelopersContext);
   const classes = useStyles();
 
   const handleClickOpen = async () => {
@@ -45,7 +47,9 @@ export default function NewDeveloper() {
       hobby,
       birthDate,
     };
-    const response = api.post('/developers', data);
+    const response = await api.post('/developers', data);
+    setDevelopers([...developers, response.data]);
+    console.log('response', response);
     setOpen(false);
     return response;
   }

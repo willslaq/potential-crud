@@ -13,8 +13,7 @@ import {
   TextField,
 } from '@material-ui/core';
 import EditRoundedIcon from '@material-ui/icons/EditRounded';
-import React, { useContext, useEffect, useState } from 'react';
-import { DevelopersContext } from '../../providers/DevelopersContext';
+import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
 import RoundedButton from '../RoundedButton';
 import { useStyles } from './styles';
@@ -26,7 +25,6 @@ export default function DeveloperModal({ id }) {
   const [gender, setGender] = useState();
   const [hobby, setHobby] = useState();
   const [birthDate, setBirthDate] = useState();
-  const { developers, setDevelopers } = useContext(DevelopersContext);
   const classes = useStyles();
 
   useEffect(() => {
@@ -62,7 +60,6 @@ export default function DeveloperModal({ id }) {
     };
     const response = api.put(`/developers/${id}`, data);
     setOpen(false);
-    setDevelopers([...developers, response]);
     return response;
   }
 

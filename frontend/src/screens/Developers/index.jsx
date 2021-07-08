@@ -16,7 +16,7 @@ export default function Developers() {
           <img src={logo} alt="logo" className={classes.logo} />
         </div>
         <SearchBar />
-        <Container maxWidth="md">
+        <Container maxWidth="md" style={{ paddingBottom: 20 }}>
           <DevelopersList />
         </Container>
         <NewDeveloper />
