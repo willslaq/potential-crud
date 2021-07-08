@@ -1,4 +1,6 @@
 ﻿# potential-crud
+ Link para visualização do projeto no Figma:
+ https://www.figma.com/file/iE87GhFRSxbS5rBe4TyJsb/DevelopersHub?node-id=0%3A1
 
 ## Instalação
 Para instalar, apenas clonar o projeto e executar dentro da pasta Frontend o comando `yarn install` e dentro da pasta backend `yarn install`
