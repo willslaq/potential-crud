@@ -1,0 +1,198 @@
+_type: export
+__export_format: 4
+__export_date: 2021-07-08T06:41:58.770Z
+__export_source: insomnia.desktop.app:v2021.4.0
+resources:
+  - _id: req_f8fcf1b37e91494fa0770866875df69a
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1625423802001
+    created: 1624943709653
+    url: "{{ _.baseUrl }}/developers"
+    name: Create Developer
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"name": "Thiago",
+        	"gender": "n",
+        	"hobby": "Jogar basquetye",
+        	"birthDate": "1999-08-20"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_e4975a813bee486eb6a825cfdb3ff1e5
+        disabled: false
+    authentication: {}
+    metaSortKey: -1624943709653
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    parentId: null
+    modified: 1624943575780
+    created: 1624943575780
+    name: potential-crud
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_3147507c14354ef9b6af699d61a62839
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1625724419468
+    created: 1624943673147
+    url: "{{ _.baseUrl }}/developers"
+    name: List Developers
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: name
+        value: tomaz
+        description: ""
+        id: pair_8d23ffdf3c674da7a65ba002e0985780
+        disabled: false
+      - name: gender
+        value: n
+        description: ""
+        id: pair_086ef8c133974683ab8d04152cea016d
+        disabled: true
+      - id: pair_00539580c5a044688b28726ce59540fb
+        name: page
+        value: "1"
+        description: ""
+        disabled: true
+      - id: pair_4a9e9d273a744a68b9d49715c812bb28
+        name: limit
+        value: "3"
+        description: ""
+        disabled: true
+    headers: []
+    authentication: {}
+    metaSortKey: -1624943673148
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_bb2b27bc97f04e71a141f8dc91028eca
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1625424166414
+    created: 1624944566321
+    url: "{{ _.baseUrl }}/developers/05159de4-171a-46ac-9857-313194ae3c39"
+    name: List Developer By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624600008135
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_25b5eeb04aaa4bdfa2123af3020eea23
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1625255445519
+    created: 1624944598161
+    url: "{{ _.baseUrl }}/developers/05159de4-171a-46ac-9857-313194ae3c39"
+    name: Update Developer
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"birthDate": "1990-05-19"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1358d002985548bba75faa7899229dfc
+    authentication: {}
+    metaSortKey: -1624428175628.5
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_12099ce38be34a0d8a47942188b38a6c
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1625424617639
+    created: 1624944609289
+    url: "{{ _.baseUrl }}/developers/1ff62f81-ec14-40fa-960a-bdb69464d470"
+    name: Delete Developer
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1624342259375.25
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_317f69b53bc1172536c56d597169820c22e342b1
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1624943629364
+    created: 1624943576370
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: {}
+    color: null
+    isPrivate: false
+    metaSortKey: 1624943576370
+    _type: environment
+  - _id: jar_317f69b53bc1172536c56d597169820c22e342b1
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1624943576382
+    created: 1624943576382
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_2d073bad72d54c78aa33b50aff363082
+    parentId: wrk_fdaeedbdf0a14bec86c055dde880e7ae
+    modified: 1624943575798
+    created: 1624943575798
+    fileName: potential-crud
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: env_c3b41594454249a699820de07a59636c
+    parentId: env_317f69b53bc1172536c56d597169820c22e342b1
+    modified: 1624943644880
+    created: 1624943612982
+    name: dev
+    data:
+      baseUrl: http://localhost:3333
+    dataPropertyOrder:
+      "&":
+        - baseUrl
+    color: "#a800f0"
+    isPrivate: false
+    metaSortKey: 1624943612982
+    _type: environment
